@@ -24,6 +24,10 @@
 		font-weight: bold;
 	}
 
+	a:hover {
+		color: var(--accent);
+	}
+
 	img {
 		height: 1.5rem;
 	}

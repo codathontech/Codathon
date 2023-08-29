@@ -17,6 +17,8 @@
 	:global(:root) {
 		--background: #fff;
 		--text: #000;
+		--gray: #f0f0f0;
+		--accent: #ffc800;
 	}
 
 	:global(*) {
