@@ -17,10 +17,10 @@
 	<div>
 		<h1>Sign up</h1>
 		{#if form?.error}
-			<div>{form.error}</div>
+			<p class="error">{form.error}</p>
 		{/if}
 		{#if form?.message}
-			<div>{form.message}</div>
+			<p class="success">{form.message}</p>
 		{/if}
 		<form method="post" use:enhance={handleSubmit}>
 			<div>
@@ -56,3 +56,13 @@
 		</div>
 	</div>
 </section>
+
+<style>
+	.error {
+		color: red;
+	}
+
+	.success {
+		color: limegreen;
+	}
+</style>

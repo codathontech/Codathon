@@ -22,7 +22,7 @@
 	<div>
 		<h1>Sign in</h1>
 		{#if form?.error}
-			<div>{form.error}</div>
+			<p class="error">{form.error}</p>
 		{/if}
 		<form method="post" use:enhance={handleSubmit}>
 			<div>
@@ -58,3 +58,9 @@
 		</div>
 	</div>
 </section>
+
+<style>
+	.error {
+		color: red;
+	}
+</style>

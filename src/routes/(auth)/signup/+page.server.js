@@ -28,8 +28,6 @@ export const actions = {
 			options: { emailRedirectTo: url.origin }
 		});
 
-		console.log(error);
-
 		if (error) {
 			if (error instanceof AuthApiError && error.status === 400) {
 				return fail(400, {
@@ -41,7 +39,7 @@ export const actions = {
 			}
 
 			return fail(500, {
-				error: "Server error. Try again later.",
+				error: "Server error: " + error.message,
 				values: {
 					email
 				}
@@ -49,7 +47,7 @@ export const actions = {
 		}
 
 		return {
-			message: "Please check your email for a magic link to log into the website."
+			message: "Please check your emails for a magic link to log into the website."
 		};
 	}
 };
