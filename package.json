@@ -17,9 +17,5 @@
 		"svelte": "^4.0.5",
 		"vite": "^4.4.2"
 	},
-	"type": "module",
-	"dependencies": {
-		"dhtmlx-gantt": "^8.0.4",
-		"svelte-gantt": "^4.0.9-beta"
-	}
+	"type": "module"
 }

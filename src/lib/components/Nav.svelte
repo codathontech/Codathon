@@ -1,7 +1,7 @@
 <nav>
 	<div class="links">
 		<a href="/host">Host</a>
-		<a href="/host">Calendar</a>
+		<a href="/calendar">Calendar</a>
 	</div>
 	<a href="/" class="codathon">Codathon</a>
 	<a class="account" href="/account"><img src="/profile.jpg" alt="👤" /></a>
@@ -42,7 +42,6 @@
 
 	.account {
 		text-align: right;
-		color: aqua;
 	}
 
 	img {
