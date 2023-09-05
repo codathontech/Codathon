@@ -1,29 +1,98 @@
 <script>
-	// Import the new component
-	import Avatar from "$lib/components/Avatar.svelte";
+	import { createEventDispatcher } from "svelte";
 
-	export let profileForm;
-	export let avatarUrl;
+	export let size = 10;
+	export let url;
+	export let supabase;
+	export let userID;
+
+	let avatarUrl = null;
+	let uploading = false;
+	let files;
+
+	const dispatch = createEventDispatcher();
+
+	const downloadImage = async (path) => {
+		try {
+			const { data, error } = await supabase.storage.from("avatars").download(path);
+
+			if (error) {
+				throw error;
+			}
+
+			const url = URL.createObjectURL(data);
+			avatarUrl = url;
+		} catch (error) {
+			if (error instanceof Error) {
+				console.log("Error downloading image: ", error.message);
+			}
+		}
+	};
+
+	const uploadAvatar = async () => {
+		try {
+			uploading = true;
+
+			if (!files || files.length === 0) {
+				throw new Error("You must select an image to upload.");
+			}
+
+			const file = files[0];
+			const fileExt = file.name.split(".").pop();
+			const filePath = `${userID}.${fileExt}`;
+			console.log(supabase);
+
+			let { error } = await supabase.storage.from("avatars").upload(filePath, file);
+
+			if (error) {
+				throw error;
+			}
+
+			url = filePath;
+			setTimeout(() => {
+				dispatch("upload");
+			}, 100);
+		} catch (error) {
+			if (error instanceof Error) {
+				alert(error.message);
+			}
+		} finally {
+			uploading = false;
+		}
+	};
+
+	$: if (url) downloadImage(url);
 </script>
 
-<div class="form-widget">
-	<form
-		class="form-widget"
-		method="post"
-		action="?/update"
-		use:enhance={handleSubmit}
-		bind:this={profileForm}
-	>
-		<!-- Add to body -->
-		<Avatar
-			{supabase}
-			bind:url={avatarUrl}
-			size={10}
-			on:upload={() => {
-				profileForm.requestSubmit();
-			}}
+<div>
+	{#if avatarUrl}
+		<img
+			src={avatarUrl}
+			alt={avatarUrl ? "Avatar" : "No image"}
+			class="avatar image"
+			style="height: {size}em; width: {size}em;"
 		/>
+	{:else}
+		<img
+			src="/user.svg"
+			alt="placeholder"
+			style="height: {size}em; width: {size}em; background-color: #000;"
+		/>
+	{/if}
+	<input type="hidden" name="avatarUrl" value={url} />
 
-		<!-- Other form elements -->
-	</form>
+	<div style="width: {size}em;">
+		<label for="single">
+			{uploading ? "Uploading ..." : "Upload"}
+		</label>
+		<input
+			style="visibility: hidden; position:absolute;"
+			type="file"
+			id="single"
+			accept="image/*"
+			bind:files
+			on:change={uploadAvatar}
+			disabled={uploading}
+		/>
+	</div>
 </div>

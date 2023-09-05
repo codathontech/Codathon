@@ -38,7 +38,7 @@ export const actions = {
 
 		const session = await getSession();
 
-		const { error } = await supabase
+		const { data, error } = await supabase
 			.from("profiles")
 			.update({
 				username,
@@ -50,8 +50,6 @@ export const actions = {
 			})
 			.eq("id", session?.user.id)
 			.select();
-
-		console.log(error);
 
 		if (error) {
 			return fail(500, {

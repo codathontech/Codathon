@@ -2,7 +2,7 @@
 	export let data;
 	export let form;
 
-	let { session, profile } = data;
+	let { session, supabase, profile } = data;
 
 	let profileForm;
 	let loading = false;
@@ -21,6 +21,7 @@
 
 	import { applyAction, enhance } from "$app/forms";
 	import { invalidate } from "$app/navigation";
+	import Avatar from "../../lib/components/Avatar.svelte";
 
 	const handleLogout = () => {
 		loading = true;
@@ -87,6 +88,8 @@
 			<label for="website">Website</label>
 			<input id="website" name="website" type="url" value={form?.website ?? website} />
 		</div>
+
+		<Avatar bind:url={avatarUrl} {supabase} userID={data.profile.id} />
 
 		<div>
 			<input type="submit" value={loading ? "Loading..." : "Update"} disabled={loading} />
