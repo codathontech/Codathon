@@ -40,7 +40,6 @@
 			const file = files[0];
 			const fileExt = file.name.split(".").pop();
 			const filePath = `${userID}.${fileExt}`;
-			console.log(supabase);
 
 			let { error } = await supabase.storage.from("avatars").upload(filePath, file);
 

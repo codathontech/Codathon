@@ -1,10 +1,24 @@
+<script>
+	import { onMount } from "svelte";
+
+	export let avatarUrl;
+
+	let imageUrl = "user.svg";
+
+	onMount(() => {
+		if (avatarUrl) {
+			imageUrl = avatarUrl;
+		}
+	});
+</script>
+
 <nav>
 	<div class="links">
 		<a href="/host">Host</a>
 		<a href="/calendar">Calendar</a>
 	</div>
 	<a href="/" class="codathon">Codathon</a>
-	<a class="account" href="/account"><img src="/profile.jpg" alt="👤" /></a>
+	<a class="account" href="/account"><img src={imageUrl} alt="👤" /></a>
 </nav>
 
 <style>
