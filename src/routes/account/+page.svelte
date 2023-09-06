@@ -1,11 +1,14 @@
 <script>
+	import { enhance } from "$app/forms";
+	import Avatar from "$lib/components/Avatar.svelte";
+
 	export let data;
 	export let form;
 
 	let { session, supabase, profile } = data;
 
-	let profileForm;
 	let loading = false;
+
 	let username = data.profile.username ?? "";
 	let firstName = data.profile.first_name ?? "";
 	let lastName = data.profile.last_name ?? "";
@@ -18,34 +21,12 @@
 			loading = false;
 		};
 	};
-
-	import { applyAction, enhance } from "$app/forms";
-	import { invalidate } from "$app/navigation";
-	import Avatar from "../../lib/components/Avatar.svelte";
-
-	const handleLogout = () => {
-		loading = true;
-		return async ({ result }) => {
-			if (result.type === "redirect") {
-				await invalidate("supabase:auth");
-			} else {
-				await applyAction(result);
-			}
-			loading = false;
-		};
-	};
 </script>
 
 <main>
 	<h1>Your account</h1>
 
-	<form
-		class="form-widget"
-		method="post"
-		action="?/update"
-		use:enhance={handleSubmit}
-		bind:this={profileForm}
-	>
+	<form class="form-widget" method="post" action="?/update" use:enhance={handleSubmit}>
 		<div>
 			<label for="email">Email</label>
 			<input id="email" type="text" value={session.user.email} disabled />
@@ -96,7 +77,7 @@
 		</div>
 	</form>
 
-	<form action="/logout" method="post" use:enhance={handleLogout}>
+	<form action="/logout" method="post">
 		<button disabled={loading} type="submit">Sign out</button>
 	</form>
 </main>

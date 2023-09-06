@@ -38,7 +38,7 @@ export const actions = {
 
 		const session = await getSession();
 
-		const { data, error } = await supabase
+		const { error } = await supabase
 			.from("profiles")
 			.update({
 				username,
@@ -70,7 +70,7 @@ export const actions = {
 		};
 	},
 
-	signout: async ({ locals: { supabase, getSession } }) => {
+	logout: async ({ locals: { supabase, getSession } }) => {
 		const session = await getSession();
 		if (session) {
 			await supabase.auth.signOut();
