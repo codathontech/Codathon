@@ -26,13 +26,9 @@ export const actions = {
 		const website = formData.get("website");
 		const avatarUrl = formData.get("avatarUrl");
 
-		if (!username || !firstName || !lastName) {
-			return fail(500, {
-				username,
-				firstName,
-				lastName,
-				website,
-				avatarUrl
+		if (!username) {
+			return fail(400, {
+				error: "Please enter a username!"
 			});
 		}
 
@@ -53,21 +49,11 @@ export const actions = {
 
 		if (error) {
 			return fail(500, {
-				username,
-				firstName,
-				lastName,
-				website,
-				avatarUrl
+				error: error.message
 			});
 		}
 
-		return {
-			username,
-			firstName,
-			lastName,
-			website,
-			avatarUrl
-		};
+		return { success: true };
 	},
 
 	logout: async ({ locals: { supabase, getSession } }) => {

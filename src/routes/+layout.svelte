@@ -1,5 +1,6 @@
 <script>
 	import Nav from "$lib/components/Nav.svelte";
+	import { Toaster } from "svelte-french-toast";
 
 	import { invalidate } from "$app/navigation";
 	import { onMount } from "svelte";
@@ -20,6 +21,7 @@
 </script>
 
 <body>
+	<Toaster />
 	<Nav avatarUrl={data.avatarUrl} />
 	<div class="content"><slot /></div>
 </body>

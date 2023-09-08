@@ -19,14 +19,16 @@ export const load = async ({ fetch, data, depends }) => {
 		const { data } = await supabase.from("profiles").select("avatar_url").eq("id", session.user.id);
 		const avatar = data[0].avatar_url;
 
-		const { data: storageData } = await supabase.storage.from("avatars").download(avatar);
-		const avatarUrl = URL.createObjectURL(storageData);
+		if (avatar) {
+			const { data: storageData } = await supabase.storage.from("avatars").download(avatar);
+			const avatarUrl = URL.createObjectURL(storageData);
 
-		return {
-			supabase,
-			session,
-			avatarUrl
-		};
+			return {
+				supabase,
+				session,
+				avatarUrl
+			};
+		}
 	}
 
 	return { supabase, session };
