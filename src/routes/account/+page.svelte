@@ -33,14 +33,6 @@
 </script>
 
 <main>
-	{#if form?.success}
-		<p>Success</p>
-	{/if}
-
-	{#if form?.error}
-		<p>{form.error}</p>
-	{/if}
-
 	<h1>Your account</h1>
 
 	<form class="form-widget" method="post" action="?/update" use:enhance={handleSubmit}>
