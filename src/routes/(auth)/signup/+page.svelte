@@ -1,16 +1,7 @@
 <script>
-	import { applyAction, enhance } from "$app/forms";
+	import { enhance } from "$app/forms";
 
 	export let form;
-	let loading = false;
-
-	const handleSubmit = () => {
-		loading = true;
-		return async ({ result }) => {
-			await applyAction(result);
-			loading = false;
-		};
-	};
 </script>
 
 <section>
@@ -22,7 +13,7 @@
 		{#if form?.message}
 			<p class="success">{form.message}</p>
 		{/if}
-		<form method="post" use:enhance={handleSubmit}>
+		<form method="post" use:enhance>
 			<div>
 				<label for="email">Email</label>
 				<p>
@@ -44,7 +35,7 @@
 			</div>
 			<div>
 				<p>
-					<button disabled={loading}>Sign up</button>
+					<button>Sign up</button>
 				</p>
 			</div>
 		</form>

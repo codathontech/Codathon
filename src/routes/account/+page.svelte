@@ -49,6 +49,7 @@
 				type="text"
 				value={form?.username ?? username}
 				minlength="3"
+				required
 			/>
 		</div>
 

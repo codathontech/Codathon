@@ -1,21 +1,7 @@
 <script>
-	import { applyAction, enhance } from "$app/forms";
-	import { invalidate } from "$app/navigation";
+	import { enhance } from "$app/forms";
 
 	export let form;
-	let loading = false;
-
-	const handleSubmit = () => {
-		loading = true;
-		return async ({ result }) => {
-			if (result.type === "redirect") {
-				await invalidate("supabase:auth");
-			} else {
-				await applyAction(result);
-			}
-			loading = false;
-		};
-	};
 </script>
 
 <section>
@@ -24,7 +10,7 @@
 		{#if form?.error}
 			<p class="error">{form.error}</p>
 		{/if}
-		<form method="post" use:enhance={handleSubmit}>
+		<form method="post" use:enhance>
 			<div>
 				<label for="email">Email</label>
 				<p>
@@ -46,7 +32,7 @@
 			</div>
 			<div>
 				<p>
-					<button disabled={loading}>Sign in</button>
+					<button>Sign in</button>
 				</p>
 			</div>
 		</form>
